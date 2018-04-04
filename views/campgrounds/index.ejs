@@ -1,0 +1,44 @@
+<% include ../partials/header%>
+
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to MYCAMP</h1>
+            <p>
+                These are some of the awesome campgrounds
+            </p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add new campground</a>
+            </p> 
+        </div>
+        
+        
+    </header>
+    
+    <div class="row" style="display:flex; flex-wrap: wrap;">
+        
+         <%campgrounds.forEach(function(campground){%>
+            <div class="col-md-3 col-sm-6">
+                <div class="img-thumbnail">
+                    <figure class="figure">
+                  <img  src="<%= campground.image%>" class="figure-img img-fluid rounded">
+                  <figcaption class="figure-caption"><%= campground.name%></figcaption> 
+                  <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">more info</a>
+                </figure>
+                </div>
+                
+                
+                
+            </div>
+        <% }); %>
+        
+    </div>
+</div>
+
+
+
+
+
+
+<% include ../partials/footer%>
