@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+var passport = require("passport");
+var User = require("../models/user");
 //=================================================
 //AUTH routes
 //==================================================
@@ -10,7 +12,7 @@ router.get("/register", function(req,res){
 });
 
 //handle signup logic
-app.post("/register", function(req, res){
+router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -50,4 +52,4 @@ function isLoggedIn(req, res, next){
 }
 
 
-module.export = router;
+module.exports = router;
