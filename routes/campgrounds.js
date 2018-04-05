@@ -22,6 +22,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
    res.render("campgrounds/new"); 
 });
 
+
 router.post("/", middleware.isLoggedIn, function(req, res){
     //get data from form and add to campground array
     //redirect to campground
@@ -37,7 +38,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     //create new campground and save to database
     Campground.create(newCampground, function(err, newlycreated){
         if(err){
-            console.log(err);
+            req.flash("error", "something went wrong");
         }
         else
         {

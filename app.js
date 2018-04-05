@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var flash = require("connect-flash");
 var passport = require("passport");
 var methodOverride = require("method-override");
 var localStrategy = require("passport-local");
@@ -26,29 +27,37 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
+app.use(flash());
 
 // console.log(__dirname);
 
 
 //seedDB();  //seed database
-
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "this will be used for the hash function",
     resave: false,
     saveUninitialized: false
 }));
+//middleware to send req.user to evrey route
+//to send message to every routes
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
+
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//middleware to send req.user to evrey route
-app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    next();
-});
+
 
 
 app.use("/", indexRoutes);
