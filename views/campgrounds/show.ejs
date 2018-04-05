@@ -28,9 +28,16 @@
 						<%= campground.author.username %></em>
 						</p>
 					</div>
-					<div class="container">
-						<a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+					<% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+						<div class="container">
+						<a class="btn btn-sm btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+						<form class="delete-form" method="POST" action="/campgrounds/<%= campground._id %>?_method=DELETE">
+							<button class="btn btn-sm btn-danger">Delete</button>
+						</form>
+
 					</div>
+
+					<% } %>
 					
 					
 				
@@ -54,11 +61,22 @@
 				    <div class="row">
 				    	<div class="col-md-12">
 				    		<strong><%= comment.author.username %></strong>
-				    		<span class="text-right" style="float: right">10 days ago</span>
 				    		<p>
     							<%- comment.text %>
     						</p>
 				    	</div>
+				    	
+				    		
+				    	<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+				    	<div class="container">
+				    	<a class="btn btn-sm btn-warning" 
+				    	href="/campgrounds/<%= campground._id%>/comments/<%=comment._id%>/edit">edit</a>
+				    	<form action="/campgrounds/<%= campground._id%>/comments/<%=comment._id%>?_method=DELETE" class="delete-form" method="POST">
+				    		<button class="btn btn-sm btn-danger">Delete
+				    	</form>
+				    	</div>
+				    	<% } %>
+				    	
 				    </div>
 
     				
