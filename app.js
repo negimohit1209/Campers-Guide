@@ -16,12 +16,14 @@ var User = require("./models/user");
 
 var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/campgrounds"),
-    indexRoutes         = require("./routes/index")
+    indexRoutes         = require("./routes/index");
 
 
 console.log(process.env.DATABASEURL);
 
-mongoose.connect(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
+
+mongoose.connect(url);
 
 
 //mongoose.connect("mongodb://mohit:mohit@ds237489.mlab.com:37489/camper_guide");
